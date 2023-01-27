@@ -1,20 +1,24 @@
 const net = require('net')
 const readline = require('readline-sync')
 
-console.log("hola inicio de todo")
+var miIp=''
 
-var miIp = readline.question('\nintrodusca la ip del servidor:\t ')
-var por = readline.question('\nintrodusca la port del servidor:\t ')
+datoIp()
+function datoIp(){
+    miIp = readline.question('\nIntroduzca la ip del servidor:\t ')
+}
 
-    const options = {      
-        port: por,
-        host: miIp
-    }
+const options = {      
+    port: 4005,
+    host: miIp
+}
  
 const client = net.createConnection(options)
 
 client.on('connect', ()=>{
-    console.log('Conexion satisfactoria!')
+    console.log('Conexion satisfactoria')
+    var User = readline.question('\nIngrese su nombre:\t ')
+    client.write(User)
     sendLine()
 })
 
