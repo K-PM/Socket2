@@ -23,7 +23,7 @@ client.on('connect', ()=>{
 })
 
 client.on ('data', (data)=>{  // CHECAR AQUI
-    console.log('El servidor dice:' + data)
+   console.log(data)
     sendLine()
 })
 

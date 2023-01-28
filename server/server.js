@@ -5,6 +5,8 @@ var IPS =[]
 var bandera=false
 var name=''
 var userName=[]
+
+
 server.on('connection', (socket)=>{
     
     IPS.push(socket)
@@ -32,7 +34,7 @@ server.on('connection', (socket)=>{
 //SI JALA
         IPS.map((anotherUser) => { 
          anotherUser.write(remitente + ":  " + data.toString())
-         console.log("ENTRO "+remitente + ":  " + data.toString())
+         
         })
         bandera=false
     })
