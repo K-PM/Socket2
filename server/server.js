@@ -9,7 +9,7 @@ var userName=[]
 
 server.on('connection', (socket)=>{
     
-    IPS.push(socket.remoteAddress)
+    IPS.push(socket)
     console.log(socket.remoteAddress+ ' conectado')
     bandera=true
 
@@ -24,21 +24,9 @@ server.on('connection', (socket)=>{
             let newUser = new Useres (name,remitente)
             userName.push(newUser)
         }else{
-            for(var p=0; p<IPS.length; p++){
-                if(IPS[p]!=remitente){
-                     anotherUser.write('\n'+remitente + ":  " + data.toString())
-                }
-                else{
-                    console.log("dentro del  for")
-                }
-
-            }
-            // IPS.map((anotherUser) => { 
-            //     if(remitente!=anotherUser){
-                   
-            //     }
-                
-            // })
+            IPS.map((anotherUser) => { 
+                anotherUser.write('\n'+remitente + ":  " + data.toString())
+            })
         }
     // console.log("lista de IPS "+ IPS[0].remoteAddress)
         // console.log('Usuario Externo: '+data) 
