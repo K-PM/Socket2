@@ -30,11 +30,11 @@ server.on('connection', (socket)=>{
                 }
             })
         }
-    // console.log("lista de IPS "+ IPS[0].remoteAddress)
+    
+        // console.log('lista de usuarios '+userName[0].nombre)
+        // console.log("lista de IPS "+ IPS[0].remoteAddress)
         // console.log('Usuario Externo: '+data) 
         // console.log('Usuario Externo 2: '+data.toString().trim()) 
- 
-    // console.log('lista de usuarios '+userName[0].nombre)
         bandera=false
     })
 
