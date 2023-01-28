@@ -1,37 +1,96 @@
 const net = require('net');
 
 const server = net.createServer()
-let IPS =[]
-var i=0;
-
+var IPS =[]
+var bandera=false
+var name=''
+var userName=[]
 server.on('connection', (socket)=>{
-    i++
-    IPS.push[i]
-
-    console.log('usuario 1'+IPS.pop[i])
-
+    
+    IPS.push(socket)
+    console.log(socket.remoteAddress+ ' conectado')
+    bandera=true
 
 
     socket.on('data', (data)=>{
-
-        IPS.push[i]
-
-        console.log('usuario 2'+IPS.pop[i])
         
-        console.log('\nMensaje recibido desde el cliente:' + data)
-            socket.write('Usuario Externo: '+data) //escribe servidor  y se va al cliente
-            
+        console.log("valor de bandera "+ bandera )
+        const remitente =socket.remoteAddress
+
+        if(bandera==true){
+            name =data.toString().trim()
+            let newUser = new Useres (name,remitente)
+            userName.push(newUser)
+        }
+    // console.log("lista de IPS "+ IPS[0].remoteAddress)
+        // console.log('Usuario Externo: '+data) 
+        // console.log('Usuario Externo 2: '+data.toString().trim()) 
+ 
+    // console.log('lista de usuarios '+userName[0].nombre)
+//
+
+//SI JALA
+        IPS.map((anotherUser) => { 
+         anotherUser.write(remitente + ":  " + data.toString())
+         console.log("ENTRO "+remitente + ":  " + data.toString())
+        })
+        bandera=false
     })
 
+
+
+
+
+
+
+
+
+
+
+
+
     socket.on('close', ()=>{
+        
         console.log('Comunicacion finalizada')
+
     })
 
     socket.on('error', (err)=>{
-        console.log(err.message)
+        if (err.errno == -4077) {
+            IPS.map((anotherUser) => {
+                anotherUser.write(socket.remoteAddress + " ha salido del servidor")
+            })
+            console.log(socket.remoteAddress + " ha salido del servidor")
+
+        } else {
+            console.error('usuario cancelo la coneccion con ctrl+c  =>'+err)
+        }
     })
+
 })
 
-server.listen(4005, ()=> {
+server.on('error', (err) => {
+    console.log(err)
+})
+
+server.listen(4009, ()=> {
     console.log('servidor esta escuchando en el puerto', server.address().port)
 })
+
+
+
+
+
+
+
+
+
+
+
+
+class Useres {
+    constructor(nombre, ip) {
+      this.nombre = nombre;
+      this.ip = ip;
+    }
+  }

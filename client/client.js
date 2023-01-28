@@ -9,7 +9,7 @@ function datoIp(){
 }
 
 const options = {      
-    port: 4005,
+    port: 4009,
     host: miIp
 }
  
@@ -22,7 +22,7 @@ client.on('connect', ()=>{
     sendLine()
 })
 
-client.on ('data', (data)=>{
+client.on ('data', (data)=>{  // CHECAR AQUI
     console.log('El servidor dice:' + data)
     sendLine()
 })
