@@ -23,19 +23,16 @@ server.on('connection', (socket)=>{
             name =data.toString().trim()
             let newUser = new Useres (name,remitente)
             userName.push(newUser)
+        }else{
+            IPS.map((anotherUser) => { 
+                anotherUser.write('\n'+remitente + ":  " + data.toString())
+            })
         }
     // console.log("lista de IPS "+ IPS[0].remoteAddress)
         // console.log('Usuario Externo: '+data) 
         // console.log('Usuario Externo 2: '+data.toString().trim()) 
  
     // console.log('lista de usuarios '+userName[0].nombre)
-//
-
-//SI JALA
-        IPS.map((anotherUser) => { 
-         anotherUser.write(remitente + ":  " + data.toString())
-         
-        })
         bandera=false
     })
 
