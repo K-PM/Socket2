@@ -26,7 +26,7 @@ server.on('connection', (socket)=>{
         }else{
             IPS.map((anotherUser) => { 
                 if(anotherUser!=remitente){
-                    anotherUser.write('\n'+remitente + ":  " + data.toString().trim())
+                    anotherUser.write('\n'+remitente.remoteAddress + ":  " + data.toString().trim())
                 }
             })
         }
