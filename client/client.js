@@ -22,10 +22,10 @@ client.on('connect', ()=>{
     sendLine()
 })
 
-client.on ('data', (data)=>{  // CHECAR AQUI
-   console.log(data)
-    sendLine()
-})
+// client.on ('data', (data)=>{  // CHECAR AQUI
+//    console.log('otro cliente:' + data)
+//     sendLine()
+// })
 
 client.on('error', (err)=>{
     console.log(err.message)
