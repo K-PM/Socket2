@@ -23,7 +23,7 @@ client.on('connect', ()=>{
 })
 
 client.on ('data', (data)=>{  // CHECAR AQUI
-  console.log( data.toString())
+  console.log( data.toString().trim())
     sendLine()
 })
 
@@ -37,6 +37,6 @@ function sendLine() {
         //fin del programa
         client.end()
     }else{
-        client.write(line)
+        client.write(line.trim())
     }
 }

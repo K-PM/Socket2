@@ -17,7 +17,7 @@ server.on('connection', (socket)=>{
     socket.on('data', (data)=>{
         
         console.log("valor de bandera "+ bandera )
-        const remitente =socket.remoteAddress
+        const remitente =socket
 
         if(bandera==true){
             name =data.toString().trim()
@@ -25,7 +25,9 @@ server.on('connection', (socket)=>{
             userName.push(newUser)
         }else{
             IPS.map((anotherUser) => { 
-                anotherUser.write('\n'+remitente + ":  " + data.toString())
+                if(anotherUser!=remitente){
+                    anotherUser.write('\n'+remitente + ":  " + data.toString().trim())
+                }
             })
         }
     // console.log("lista de IPS "+ IPS[0].remoteAddress)
