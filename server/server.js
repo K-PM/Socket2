@@ -15,14 +15,15 @@ server.on('connection', (socket)=>{
 
 
     socket.on('data', (data)=>{
-        
         console.log("valor de bandera "+ bandera )
         const remitente =socket
 
         if(bandera==true){
             name =data.toString().trim()
-            let newUser = new Useres (name,remitente)
-            userName.push(newUser)
+            userName.push(name)
+            //PARA UN ARRAY DE OBJETO
+            //let newUser = new Useres (name,remitente)
+            //userName.push(newUser)
         }else{
             IPS.map((anotherUser) => { 
                 if(anotherUser!=remitente){
@@ -30,7 +31,8 @@ server.on('connection', (socket)=>{
                 }
             })
         }
-    
+
+        socket.write(remitente +'Envie un mensaje: ')
         // console.log('lista de usuarios '+userName[0].nombre)
         // console.log("lista de IPS "+ IPS[0].remoteAddress)
         // console.log('Usuario Externo: '+data) 
@@ -88,10 +90,10 @@ server.listen(4009, ()=> {
 
 
 
-
-class Useres {
-    constructor(nombre, ip) {
-      this.nombre = nombre;
-      this.ip = ip;
-    }
-  }
+//PARA CREAR UNA PERSONA
+// class Useres {
+//     constructor(nombre, ip) {
+//       this.nombre = nombre;
+//       this.ip = ip;
+//     }
+//   }
