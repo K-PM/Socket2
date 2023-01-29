@@ -4,8 +4,8 @@ const server = net.createServer()
 var IPS =[]
 var bandera=false
 var name=''
-var userName=[]
-
+var userName=['up','kris','julissa']
+var bandera2='false'
 
 server.on('connection', (socket)=>{
     
@@ -20,37 +20,39 @@ server.on('connection', (socket)=>{
 
         if(bandera==true){
             name =data.toString().trim()
-            userName.push(name)
+            //userName.push(name)
             //PARA UN ARRAY DE OBJETO
             //let newUser = new Useres (name,remitente)
             //userName.push(newUser)
+
+            userName.map((encontrar) => { 
+                if(encontrar==name){
+                    console.log('encontrando verdadero')
+                     bandera2='true'
+                }else if(encontrar!=name){
+                    console.log('encontrando FALSO')
+                    
+                }
+                return encontrar
+            })
+           console.log('valor de la segunda bandera '+ bandera2)
+           socket.write(bandera2)
+
         }else{
             IPS.map((anotherUser) => { 
                 if(anotherUser!=remitente){
                     anotherUser.write('\n'+remitente.remoteAddress + ":  " + data.toString().trim())
                 }
             })
+        
+            socket.write(remitente.remoteAddress)
         }
-
-        socket.write(addEnter(remitente +'Envie un mensaje: '))
         // console.log('lista de usuarios '+userName[0].nombre)
         // console.log("lista de IPS "+ IPS[0].remoteAddress)
         // console.log('Usuario Externo: '+data) 
         // console.log('Usuario Externo 2: '+data.toString().trim()) 
         bandera=false
     })
-
-    function addEnter(string){
-        return string + '\n';
-      }
-
-
-
-
-
-
-
-
 
 
 
@@ -65,10 +67,10 @@ server.on('connection', (socket)=>{
             IPS.map((anotherUser) => {
                 anotherUser.write(socket.remoteAddress + " ha salido del servidor")
             })
-            console.log(socket.remoteAddress + " ha salido del servidor")
+            console.log(socket.remoteAddress + "usuario cancelo la coneccion con ctrl+c ")
 
         } else {
-            console.error('usuario cancelo la coneccion con ctrl+c  =>'+err)
+            console.error(err)
         }
     })
 

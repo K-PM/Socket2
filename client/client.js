@@ -2,17 +2,22 @@ const net = require('net')
 const readline = require('readline-sync')
 
 var miIp=''
-datoIp()
-// home()
-// function home(){
-    
-//         if (readline.question('QUE DESEA HACER\n1.- Iniciar secion\t2. Registrar') == '1'){
-            
-//             bandera=true
-//         }
-    
-    
-// }
+
+
+home()
+function home(){
+    do{
+         var opc =readline.question('QUE DESEA HACER\n1.- Iniciar secion\t2. Registrar\n') 
+        if (opc== 1){
+            datoIp()
+        }else if(opc==2){
+            console.log(' DOS ')
+        }    
+    }while(opc<0 && opc>2)
+       
+}
+
+
 function datoIp(){
     miIp = readline.question('\nIntroduzca la ip del servidor:\t ')
 }
@@ -20,23 +25,37 @@ const options = {
     port: 4009,
     host: miIp
 }
- 
 const client = net.createConnection(options)
 
 
 client.on('connect', ()=>{
     console.log('Conexion satisfactoria')
-    sendLine()
+     encontrar()
 })
 
-client.on ('data', (data)=>{ 
-  console.log( data.toString())
- 
-  sendLine()
+client.on ('data', (data)=>{  
+    var bandera='true'
+
+    bandera=data.toString().trim()
+    console.log('AQUI ANDO '+bandera)
+
+        if(bandera=='false'){
+            client.end
+        }else if(bandera=='true'){
+        console.log( data.toString())
+        sendLine()}
+        else if(bandera!=''){
+            console.log(data.toString())
+            sendLine()}
+        
 })
 
 
 
+function encontrar(){
+var user =readline.question('Usuario:\t')
+        client.write(user)
+}
 
 client.on('error', (err)=>{
     console.log(err.message)
@@ -59,7 +78,7 @@ function sendLine() {
     //     }
        
     // });
-        var line = readline.question()
+        var line = readline.question('Envie un mensaje: ')
     if (line == "0"){
         //fin del programa
         client.end()
