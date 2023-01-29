@@ -32,7 +32,7 @@ server.on('connection', (socket)=>{
             })
         }
 
-        socket.write(remitente +'Envie un mensaje: ')
+        socket.write(addEnter(remitente +'Envie un mensaje: '))
         // console.log('lista de usuarios '+userName[0].nombre)
         // console.log("lista de IPS "+ IPS[0].remoteAddress)
         // console.log('Usuario Externo: '+data) 
@@ -40,7 +40,9 @@ server.on('connection', (socket)=>{
         bandera=false
     })
 
-
+    function addEnter(string){
+        return string + '\n';
+      }
 
 
 
