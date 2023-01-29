@@ -5,19 +5,22 @@ var IPS =[]
 var bandera=false
 var name=''
 var userName=['up','kris','julissa']
-var bandera2='false'
+
+var bandera3=''
+
 
 server.on('connection', (socket)=>{
     
     IPS.push(socket)
     console.log(socket.remoteAddress+ ' conectado')
     bandera=true
-
+    var bandera2=''
 
     socket.on('data', (data)=>{
         console.log("valor de bandera "+ bandera )
         const remitente =socket
-
+        bandera2='false'
+        
         if(bandera==true){
             name =data.toString().trim()
             //userName.push(name)
@@ -25,15 +28,19 @@ server.on('connection', (socket)=>{
             //let newUser = new Useres (name,remitente)
             //userName.push(newUser)
 
-            userName.map((encontrar) => { 
-                if(encontrar==name){
+            userName.some((encontrar) => { 
+                if(encontrar===name){
                     console.log('encontrando verdadero')
-                     bandera2='true'
+                    
+                    bandera2='true' 
+
+                    return bandera2
+
                 }else if(encontrar!=name){
                     console.log('encontrando FALSO')
-                    
+                     
                 }
-                return encontrar
+               
             })
            console.log('valor de la segunda bandera '+ bandera2)
            socket.write(bandera2)
