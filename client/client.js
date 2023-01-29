@@ -37,7 +37,6 @@ client.on ('data', (data)=>{
     var bandera='true'
 
     bandera=data.toString().trim()
-    console.log('AQUI ANDO '+bandera)
 
         if(bandera=='false'){
             client.end
