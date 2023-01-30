@@ -2,69 +2,95 @@ const net = require('net');
 
 const server = net.createServer()
 var IPS =[]
+
 var bandera=false
 var name=''
-var userName=['up','kris','julissa']
-
-var bandera3=''
+var userName=[{name:'julissa',entro:false},{name:'kris',entro:false},{name:'up',entro:false}]
+var usuariosActivos=[]
+var bandera2=false
 
 
 server.on('connection', (socket)=>{
     
     IPS.push(socket)
+
+    
+    
     console.log(socket.remoteAddress+ ' conectado')
     bandera=true
-    var bandera2=''
+    
 
     socket.on('data', (data)=>{
-        console.log("valor de bandera "+ bandera )
         const remitente =socket
-        bandera2='false'
+        
         
         if(bandera==true){
-            name =data.toString().trim()
             //userName.push(name)
             //PARA UN ARRAY DE OBJETO
-            //let newUser = new Useres (name,remitente)
-            //userName.push(newUser)
+            // let newUser1 = new Useres ({name:'julissa',ip:socket.remoteAddress,entro:true})
+            // usuariosActivos.push(newUser)
+            
+        
+            socket.write('Introduzca un usuario existente')
 
-            userName.some((encontrar) => { 
-                if(encontrar===name){
-                    console.log('encontrando verdadero')
+
+            // name =data.toString().trim()
+            
+            // userName.some((encontrar) => { 
+            //     if(encontrar===name){
+            //         console.log('encontrando verdadero')
                     
-                    bandera2='true' 
+            //         bandera2='true' 
 
-                    return bandera2
+            //         return bandera2
 
-                }else if(encontrar!=name){
-                    console.log('encontrando FALSO')
+            //     }else if(encontrar!=name){
+            //         console.log('encontrando FALSO')
                      
-                }
+            //     }
                
-            })
-           console.log('valor de la segunda bandera '+ bandera2)
-           socket.write(bandera2)
+            // })
 
-        }else{
+        }
+        
+        
+        for(var j=0;j<userName.length;j++){
+            if(data.toString().trim()==userName[j].name){
+                userName[j].entro=true
+               
+            }
+        }
+        
+        for(var j=0;j<userName.length;j++){
+            if(userName[j].entro==true){
             IPS.map((anotherUser) => { 
                 if(anotherUser!=remitente){
-                    anotherUser.write('\n'+remitente.remoteAddress + ":  " + data.toString().trim())
+                    anotherUser.write('\n'+userName[j].name + ":  " + data.toString().trim())
                 }
             })
-        
-            socket.write(remitente.remoteAddress)
+            socket.write(userName[j].name+': ')
+            userName[j].entro=false
         }
-        // console.log('lista de usuarios '+userName[0].nombre)
-        // console.log("lista de IPS "+ IPS[0].remoteAddress)
-        // console.log('Usuario Externo: '+data) 
-        // console.log('Usuario Externo 2: '+data.toString().trim()) 
-        bandera=false
+        }   
+        // userName.some((encontrar) => { 
+            //     if(encontrar===name){
+            //         console.log('encontrando verdadero')
+                    
+            //         bandera2='true' 
+
+            //         return bandera2
+
+            //     }else if(encontrar!=name){
+            //         console.log('encontrando FALSO')
+                     
+            //     }
+               
+            // })
+
+        bandera=false        
     })
 
-
-
-    socket.on('close', ()=>{
-        
+    socket.on('close', ()=>{     
         console.log('Comunicacion finalizada')
 
     })
@@ -79,6 +105,8 @@ server.on('connection', (socket)=>{
         } else {
             console.error(err)
         }
+
+       
     })
 
 })
@@ -87,24 +115,14 @@ server.on('error', (err) => {
     console.log(err)
 })
 
-server.listen(4009, ()=> {
+server.listen(4010, ()=> {
     console.log('servidor esta escuchando en el puerto', server.address().port)
 })
 
-
-
-
-
-
-
-
-
-
-
 //PARA CREAR UNA PERSONA
-// class Useres {
-//     constructor(nombre, ip) {
-//       this.nombre = nombre;
-//       this.ip = ip;
-//     }
-//   }
+class Useres {
+    constructor(nombre, ip,entro) {
+      this.nombre = nombre;
+      this.ip = ip;
+    }
+  }
